@@ -25,7 +25,8 @@
   {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
 
   <ul class="grid grid--uniform grid--view-items">
-    {% for product in collection.products limit: product_limit %}
+  {% paginate collection.products by 1000 %} {% comment %} ←追記 {% endcomment %}
+    {% for product in collection.products %} {% comment %} 管理画面で表示数を制御している記述を削除 {% endcomment %}
       <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
         {% include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor %}
       </li>
@@ -47,6 +48,7 @@
         </li>
       {% endfor %}
     {% endfor %}
+  {% endpaginate %} {% comment %} ←追記 {% endcomment %}
   </ul>
 
   {% if section.settings.show_view_all %}
